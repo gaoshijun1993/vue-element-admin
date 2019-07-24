@@ -37,15 +37,18 @@ module.exports = {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://127.0.0.1:${9500}/api`,
+        target: `http://132.232.94.70/api`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       },
       '/upload': {
-        target: `http://127.0.0.1:${9500}`,
-        changeOrigin: true
+        target: `http://132.232.94.70/upload`,
+        changeOrigin: true,
+        pathRewrite: {
+          '/upload': ''
+        }
       }
     }
     // 如果启用mock-server需要为node配置一下webpack中@的alias

@@ -10,9 +10,9 @@ import search from './remote-search'
 const mocks = [
   // ...user,
   // ...role,
+  // ...route,
   ...article,
   ...search
-  // ...route
 ]
 
 // for front mock

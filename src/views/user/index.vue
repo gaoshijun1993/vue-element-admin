@@ -40,7 +40,7 @@
         </el-form-item>
         <el-form-item prop="avatar" label="avatar">
           <img v-if="userModel.avatar" :src="userModel.avatar">
-          <el-button type="primary" @click="handleUploadAvatar">upload avatar</el-button>
+          <el-button type="primary" @click="handleUploadAvatar">upload</el-button>
         </el-form-item>
         <el-form-item prop="roles" label="roles">
           <el-select :value="userModel.roles.map(el => el.id)" multiple placeholder="Please select user roles" @change="handleRoleSelect">
@@ -58,6 +58,18 @@
         <el-button type="primary" @click="handleConfirm">确 定</el-button>
       </div>
     </el-dialog>
+
+    <image-cropper
+      v-show="imagecropperShow"
+      :key="imagecropperKey"
+      field="file"
+      :width="300"
+      :height="300"
+      :url="uploadUrl"
+      lang-type="en"
+      @close="close"
+      @crop-upload-success="cropSuccess"
+    />
   </div>
 </template>
 
@@ -65,15 +77,18 @@
 import { createUser, fetchUsers, deleteUser, updateUser } from '@/api/user'
 import { getRoles } from '@/api/role'
 import VNode from '@/components/VNode'
-// import ImageCropper from '@/components/ImageCropper'
+import ImageCropper from '@/components/ImageCropper'
 export default {
   name: 'User',
   components: {
-    VNode
-    // ImageCropper
+    VNode,
+    ImageCropper
   },
   data() {
     return {
+      uploadUrl: process.env.VUE_APP_BASE_API + '/upload',
+      imagecropperShow: false,
+      imagecropperKey: 1,
       formMode: 'new',
       columns: [
         {
@@ -85,7 +100,7 @@ export default {
         {
           prop: 'avatar',
           render(h, row) {
-            return <img src={row.avatar}/>
+            return row.avatar ? <img class='avatar' src={row.avatar}/> : <span/>
           }
         },
         {
@@ -208,7 +223,16 @@ export default {
       }
     },
     handleUploadAvatar() {
-      // TODO
+      this.imagecropperShow = true
+    },
+    cropSuccess(resData) {
+      this.imagecropperShow = false
+      this.imagecropperKey = this.imagecropperKey + 1
+      debugger
+      this.image = resData.files.avatar
+    },
+    close() {
+      this.imagecropperShow = false
     }
   }
 }
@@ -216,6 +240,10 @@ export default {
 <style lang="scss" scoped>
 .new-button {
   margin: 20px 0 20px 0;
+}
+.avatar {
+  width: 30px;
+  height: 30px;
 }
 </style>
 
