@@ -65,7 +65,7 @@
       field="file"
       :width="300"
       :height="300"
-      :url="uploadUrl"
+      url="/upload"
       lang-type="en"
       @close="close"
       @crop-upload-success="cropSuccess"
@@ -86,7 +86,6 @@ export default {
   },
   data() {
     return {
-      uploadUrl: process.env.VUE_APP_BASE_API + '/upload',
       imagecropperShow: false,
       imagecropperKey: 1,
       formMode: 'new',
