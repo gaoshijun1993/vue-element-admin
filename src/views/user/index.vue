@@ -28,7 +28,7 @@
     />
 
     <el-dialog :visible.sync="dialogVisible" :title="formMode">
-      <el-form v-if="dialogVisible" ref="form" :model="userModel">
+      <el-form v-if="dialogVisible" ref="form" :model="userModel" class="form">
         <el-form-item prop="username" label="username">
           <el-input v-model="userModel.username" autocomplete="off" />
         </el-form-item>
@@ -39,8 +39,10 @@
           <el-input v-model="userModel.email">{{ userModel.email }}</el-input>
         </el-form-item>
         <el-form-item prop="avatar" label="avatar">
-          <img v-if="userModel.avatar" :src="userModel.avatar">
-          <el-button type="primary" @click="handleUploadAvatar">upload</el-button>
+          <div class="avatar-wrapper">
+            <img v-if="userModel.avatar" :src="userModel.avatar" class="avatar">
+            <el-button type="primary" size="small" @click="handleUploadAvatar">upload</el-button>
+          </div>
         </el-form-item>
         <el-form-item prop="roles" label="roles">
           <el-select :value="userModel.roles.map(el => el.id)" multiple placeholder="Please select user roles" @change="handleRoleSelect">
@@ -227,8 +229,7 @@ export default {
     cropSuccess(resData) {
       this.imagecropperShow = false
       this.imagecropperKey = this.imagecropperKey + 1
-      debugger
-      this.image = resData.files.avatar
+      this.userModel.avatar = resData.path
     },
     close() {
       this.imagecropperShow = false
@@ -243,6 +244,17 @@ export default {
 .avatar {
   width: 30px;
   height: 30px;
+}
+.form {
+  .avatar-wrapper {
+    width: 100%;
+    display: inline-block;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+    vertical-align: bottom;
+  }
 }
 </style>
 
