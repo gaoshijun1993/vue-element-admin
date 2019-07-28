@@ -11,7 +11,6 @@ const mapAsyncRoutes = asyncRoutes => {
       } else if (tmp.component instanceof Function) {
         tmp.component = /\/\*\!.*\*\//.exec(String(tmp.component))[0].split(' ')[1].slice(2)
       }
-      console.log(tmp.component)
     }
     if (tmp.children && tmp.children.length) {
       tmp.children = mapAsyncRoutes(tmp.children)
