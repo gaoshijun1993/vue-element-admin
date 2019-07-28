@@ -237,6 +237,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .new-button {
   margin: 20px 0 20px 0;
